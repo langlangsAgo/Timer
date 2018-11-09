@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api "com.android.support:recyclerview-v7:${SUPPORT_LIB_VERSION}"
+    compileOnly "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+    compileOnly "io.reactivex:rxjava:${RXJAVA_VERSION}"
+    compileOnly "io.reactivex:rxandroid:${RXANDROID_VERSION}"
+    compileOnly "com.jakewharton.rxbinding:rxbinding:${RXBINDING_VERSION}"
+    compileOnly "com.apkfuns.logutils:library:${LOGUTILS_VERSION}"
+    compileOnly "com.apkfuns.log2file:log2file:${LOG2FILE_VERSION}"
+}
