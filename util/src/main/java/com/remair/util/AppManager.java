@@ -51,21 +51,18 @@ public class AppManager {
      * 结束当前Activity（堆栈中最后一个压入的）
      */
     public void finishActivity() {
-        Activity activity = activityStack.lastElement();
-        if (activity != null) {
-            activity.finish();
-            activity = null;
-        }
+        Activity activity=activityStack.lastElement();
+        finishActivity(activity);
     }
 
     /**
      * 结束指定的Activity
      */
     public void finishActivity(Activity activity) {
-        if (activity != null) {
+        if(activity!=null){
             activityStack.remove(activity);
             activity.finish();
-            activity = null;
+            activity=null;
         }
     }
 

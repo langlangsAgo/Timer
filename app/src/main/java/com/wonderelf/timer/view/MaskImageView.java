@@ -126,29 +126,31 @@ public class MaskImageView extends android.support.v7.widget.AppCompatImageView 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        //获取测量模式
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        //获取测量大小
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-
-        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
-            mRadius = widthSize / 3;
-            x = widthSize / 2;
-            y = heightSize / 2;
-            mWidth = widthSize;
-            mHeight = heightSize;
-        }
-        if (widthMode == MeasureSpec.AT_MOST && heightMode == MeasureSpec.AT_MOST) {
-            mWidth = (int) (mRadius * 2);
-            mHeight = (int) (mRadius * 2);
-            x = mRadius;
-            y = mRadius;
-        }
-        setMeasuredDimension(widthSize, heightSize);//设置宽和高
+//        //获取测量模式
+//        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+//        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+//        //获取测量大小
+//        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+//        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+//
+//        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
+//            mRadius = widthSize / 3;
+//            x = widthSize / 2;
+//            y = heightSize / 2;
+//            mWidth = widthSize;
+//            mHeight = heightSize;
+//        }
+//        if (widthMode == MeasureSpec.AT_MOST && heightMode == MeasureSpec.AT_MOST) {
+//            mWidth = (int) (mRadius * 2);
+//            mHeight = (int) (mRadius * 2);
+//            x = mRadius;
+//            y = mRadius;
+//        }
+        mWidth = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
+        mHeight = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
+        setMeasuredDimension(mWidth, mHeight);//设置宽和高
         //自己创建一个Bitmap
-        bitmap = Bitmap.createBitmap(widthSize, heightSize, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
         canvasMask = new Canvas(bitmap);//该画布为bitmap的
     }
 

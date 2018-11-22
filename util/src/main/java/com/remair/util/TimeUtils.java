@@ -2,13 +2,16 @@ package com.remair.util;
 
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
+
 import com.remair.util.constant.TimeConstants;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * <pre>
@@ -206,7 +209,7 @@ public final class TimeUtils {
      * 将时间戳转为时间字符串
      * <p>格式为pattern</p>
      *
-     * @param millis 毫秒时间戳
+     * @param millis  毫秒时间戳
      * @param pattern 时间格式
      * @return 时间字符串
      */
@@ -232,7 +235,7 @@ public final class TimeUtils {
      * 将时间字符串转为时间戳
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return 毫秒时间戳
      */
@@ -263,7 +266,7 @@ public final class TimeUtils {
      * 将时间字符串转为Date类型
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return Date类型
      */
@@ -288,7 +291,7 @@ public final class TimeUtils {
      * 将Date类型转为时间字符串
      * <p>格式为pattern</p>
      *
-     * @param date Date类型时间
+     * @param date    Date类型时间
      * @param pattern 时间格式
      * @return 时间字符串
      */
@@ -325,14 +328,14 @@ public final class TimeUtils {
      *
      * @param time0 时间字符串0
      * @param time1 时间字符串1
-     * @param unit 单位类型
-     * <ul>
-     * <li>{@link TimeConstants#MSEC}: 毫秒</li>
-     * <li>{@link TimeConstants#SEC }: 秒</li>
-     * <li>{@link TimeConstants#MIN }: 分</li>
-     * <li>{@link TimeConstants#HOUR}: 小时</li>
-     * <li>{@link TimeConstants#DAY }: 天</li>
-     * </ul>
+     * @param unit  单位类型
+     *              <ul>
+     *              <li>{@link TimeConstants#MSEC}: 毫秒</li>
+     *              <li>{@link TimeConstants#SEC }: 秒</li>
+     *              <li>{@link TimeConstants#MIN }: 分</li>
+     *              <li>{@link TimeConstants#HOUR}: 小时</li>
+     *              <li>{@link TimeConstants#DAY }: 天</li>
+     *              </ul>
      * @return unit时间戳
      */
     public static long getTimeSpan(String time0, String time1, @TimeConstants.Unit int unit) {
@@ -344,16 +347,16 @@ public final class TimeUtils {
      * 获取两个时间差（单位：unit）
      * <p>time0和time1格式都为format</p>
      *
-     * @param time0 时间字符串0
-     * @param time1 时间字符串1
-     * @param unit 单位类型
-     * <ul>
-     * <li>{@link TimeConstants#MSEC}: 毫秒</li>
-     * <li>{@link TimeConstants#SEC }: 秒</li>
-     * <li>{@link TimeConstants#MIN }: 分</li>
-     * <li>{@link TimeConstants#HOUR}: 小时</li>
-     * <li>{@link TimeConstants#DAY }: 天</li>
-     * </ul>
+     * @param time0   时间字符串0
+     * @param time1   时间字符串1
+     * @param unit    单位类型
+     *                <ul>
+     *                <li>{@link TimeConstants#MSEC}: 毫秒</li>
+     *                <li>{@link TimeConstants#SEC }: 秒</li>
+     *                <li>{@link TimeConstants#MIN }: 分</li>
+     *                <li>{@link TimeConstants#HOUR}: 小时</li>
+     *                <li>{@link TimeConstants#DAY }: 天</li>
+     *                </ul>
      * @param pattern 时间格式
      * @return unit时间戳
      */
@@ -368,14 +371,14 @@ public final class TimeUtils {
      *
      * @param date0 Date类型时间0
      * @param date1 Date类型时间1
-     * @param unit 单位类型
-     * <ul>
-     * <li>{@link TimeConstants#MSEC}: 毫秒</li>
-     * <li>{@link TimeConstants#SEC }: 秒</li>
-     * <li>{@link TimeConstants#MIN }: 分</li>
-     * <li>{@link TimeConstants#HOUR}: 小时</li>
-     * <li>{@link TimeConstants#DAY }: 天</li>
-     * </ul>
+     * @param unit  单位类型
+     *              <ul>
+     *              <li>{@link TimeConstants#MSEC}: 毫秒</li>
+     *              <li>{@link TimeConstants#SEC }: 秒</li>
+     *              <li>{@link TimeConstants#MIN }: 分</li>
+     *              <li>{@link TimeConstants#HOUR}: 小时</li>
+     *              <li>{@link TimeConstants#DAY }: 天</li>
+     *              </ul>
      * @return unit时间戳
      */
     public static long getTimeSpan(Date date0, Date date1, @TimeConstants.Unit int unit) {
@@ -389,14 +392,14 @@ public final class TimeUtils {
      *
      * @param millis0 毫秒时间戳0
      * @param millis1 毫秒时间戳1
-     * @param unit 单位类型
-     * <ul>
-     * <li>{@link TimeConstants#MSEC}: 毫秒</li>
-     * <li>{@link TimeConstants#SEC }: 秒</li>
-     * <li>{@link TimeConstants#MIN }: 分</li>
-     * <li>{@link TimeConstants#HOUR}: 小时</li>
-     * <li>{@link TimeConstants#DAY }: 天</li>
-     * </ul>
+     * @param unit    单位类型
+     *                <ul>
+     *                <li>{@link TimeConstants#MSEC}: 毫秒</li>
+     *                <li>{@link TimeConstants#SEC }: 秒</li>
+     *                <li>{@link TimeConstants#MIN }: 分</li>
+     *                <li>{@link TimeConstants#HOUR}: 小时</li>
+     *                <li>{@link TimeConstants#DAY }: 天</li>
+     *                </ul>
      * @return unit时间戳
      */
     public static long getTimeSpan(long millis0, long millis1, @TimeConstants.Unit int unit) {
@@ -408,15 +411,15 @@ public final class TimeUtils {
      * 获取合适型两个时间差
      * <p>time0和time1格式都为yyyy-MM-dd HH:mm:ss</p>
      *
-     * @param time0 时间字符串0
-     * @param time1 时间字符串1
+     * @param time0     时间字符串0
+     * @param time1     时间字符串1
      * @param precision 精度
-     * <p>precision = 0，返回null</p>
-     * <p>precision = 1，返回天</p>
-     * <p>precision = 2，返回天和小时</p>
-     * <p>precision = 3，返回天、小时和分钟</p>
-     * <p>precision = 4，返回天、小时、分钟和秒</p>
-     * <p>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</p>
+     *                  <p>precision = 0，返回null</p>
+     *                  <p>precision = 1，返回天</p>
+     *                  <p>precision = 2，返回天和小时</p>
+     *                  <p>precision = 3，返回天、小时和分钟</p>
+     *                  <p>precision = 4，返回天、小时、分钟和秒</p>
+     *                  <p>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</p>
      * @return 合适型两个时间差
      */
     public static String getFitTimeSpan(String time0, String time1, int precision) {
@@ -430,16 +433,16 @@ public final class TimeUtils {
      * 获取合适型两个时间差
      * <p>time0和time1格式都为pattern</p>
      *
-     * @param time0 时间字符串0
-     * @param time1 时间字符串1
+     * @param time0     时间字符串0
+     * @param time1     时间字符串1
      * @param precision 精度
-     * <p>precision = 0，返回null</p>
-     * <p>precision = 1，返回天</p>
-     * <p>precision = 2，返回天和小时</p>
-     * <p>precision = 3，返回天、小时和分钟</p>
-     * <p>precision = 4，返回天、小时、分钟和秒</p>
-     * <p>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</p>
-     * @param pattern 时间格式
+     *                  <p>precision = 0，返回null</p>
+     *                  <p>precision = 1，返回天</p>
+     *                  <p>precision = 2，返回天和小时</p>
+     *                  <p>precision = 3，返回天、小时和分钟</p>
+     *                  <p>precision = 4，返回天、小时、分钟和秒</p>
+     *                  <p>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</p>
+     * @param pattern   时间格式
      * @return 合适型两个时间差
      */
     public static String getFitTimeSpan(String time0, String time1, int precision, String pattern) {
@@ -452,15 +455,15 @@ public final class TimeUtils {
     /**
      * 获取合适型两个时间差
      *
-     * @param date0 Date类型时间0
-     * @param date1 Date类型时间1
+     * @param date0     Date类型时间0
+     * @param date1     Date类型时间1
      * @param precision 精度
-     * <p>precision = 0，返回null</p>
-     * <p>precision = 1，返回天</p>
-     * <p>precision = 2，返回天和小时</p>
-     * <p>precision = 3，返回天、小时和分钟</p>
-     * <p>precision = 4，返回天、小时、分钟和秒</p>
-     * <p>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</p>
+     *                  <p>precision = 0，返回null</p>
+     *                  <p>precision = 1，返回天</p>
+     *                  <p>precision = 2，返回天和小时</p>
+     *                  <p>precision = 3，返回天、小时和分钟</p>
+     *                  <p>precision = 4，返回天、小时、分钟和秒</p>
+     *                  <p>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</p>
      * @return 合适型两个时间差
      */
     public static String getFitTimeSpan(Date date0, Date date1, int precision) {
@@ -472,15 +475,15 @@ public final class TimeUtils {
     /**
      * 获取合适型两个时间差
      *
-     * @param millis0 毫秒时间戳1
-     * @param millis1 毫秒时间戳2
+     * @param millis0   毫秒时间戳1
+     * @param millis1   毫秒时间戳2
      * @param precision 精度
-     * <p>precision = 0，返回null</p>
-     * <p>precision = 1，返回天</p>
-     * <p>precision = 2，返回天和小时</p>
-     * <p>precision = 3，返回天、小时和分钟</p>
-     * <p>precision = 4，返回天、小时、分钟和秒</p>
-     * <p>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</p>
+     *                  <p>precision = 0，返回null</p>
+     *                  <p>precision = 1，返回天</p>
+     *                  <p>precision = 2，返回天和小时</p>
+     *                  <p>precision = 3，返回天、小时和分钟</p>
+     *                  <p>precision = 4，返回天、小时、分钟和秒</p>
+     *                  <p>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</p>
      * @return 合适型两个时间差
      */
     public static String getFitTimeSpan(long millis0, long millis1, int precision) {
@@ -538,13 +541,13 @@ public final class TimeUtils {
      *
      * @param time 时间字符串
      * @param unit 单位类型
-     * <ul>
-     * <li>{@link TimeConstants#MSEC}: 毫秒</li>
-     * <li>{@link TimeConstants#SEC }: 秒</li>
-     * <li>{@link TimeConstants#MIN }: 分</li>
-     * <li>{@link TimeConstants#HOUR}: 小时</li>
-     * <li>{@link TimeConstants#DAY }: 天</li>
-     * </ul>
+     *             <ul>
+     *             <li>{@link TimeConstants#MSEC}: 毫秒</li>
+     *             <li>{@link TimeConstants#SEC }: 秒</li>
+     *             <li>{@link TimeConstants#MIN }: 分</li>
+     *             <li>{@link TimeConstants#HOUR}: 小时</li>
+     *             <li>{@link TimeConstants#DAY }: 天</li>
+     *             </ul>
      * @return unit时间戳
      */
     public static long getTimeSpanByNow(String time, @TimeConstants.Unit int unit) {
@@ -556,15 +559,15 @@ public final class TimeUtils {
      * 获取与当前时间的差（单位：unit）
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
-     * @param unit 单位类型
-     * <ul>
-     * <li>{@link TimeConstants#MSEC}: 毫秒</li>
-     * <li>{@link TimeConstants#SEC }: 秒</li>
-     * <li>{@link TimeConstants#MIN }: 分</li>
-     * <li>{@link TimeConstants#HOUR}: 小时</li>
-     * <li>{@link TimeConstants#DAY }: 天</li>
-     * </ul>
+     * @param time    时间字符串
+     * @param unit    单位类型
+     *                <ul>
+     *                <li>{@link TimeConstants#MSEC}: 毫秒</li>
+     *                <li>{@link TimeConstants#SEC }: 秒</li>
+     *                <li>{@link TimeConstants#MIN }: 分</li>
+     *                <li>{@link TimeConstants#HOUR}: 小时</li>
+     *                <li>{@link TimeConstants#DAY }: 天</li>
+     *                </ul>
      * @param pattern 时间格式
      * @return unit时间戳
      */
@@ -578,13 +581,13 @@ public final class TimeUtils {
      *
      * @param date Date类型时间
      * @param unit 单位类型
-     * <ul>
-     * <li>{@link TimeConstants#MSEC}: 毫秒</li>
-     * <li>{@link TimeConstants#SEC }: 秒</li>
-     * <li>{@link TimeConstants#MIN }: 分</li>
-     * <li>{@link TimeConstants#HOUR}: 小时</li>
-     * <li>{@link TimeConstants#DAY }: 天</li>
-     * </ul>
+     *             <ul>
+     *             <li>{@link TimeConstants#MSEC}: 毫秒</li>
+     *             <li>{@link TimeConstants#SEC }: 秒</li>
+     *             <li>{@link TimeConstants#MIN }: 分</li>
+     *             <li>{@link TimeConstants#HOUR}: 小时</li>
+     *             <li>{@link TimeConstants#DAY }: 天</li>
+     *             </ul>
      * @return unit时间戳
      */
     public static long getTimeSpanByNow(Date date, @TimeConstants.Unit int unit) {
@@ -596,14 +599,14 @@ public final class TimeUtils {
      * 获取与当前时间的差（单位：unit）
      *
      * @param millis 毫秒时间戳
-     * @param unit 单位类型
-     * <ul>
-     * <li>{@link TimeConstants#MSEC}: 毫秒</li>
-     * <li>{@link TimeConstants#SEC }: 秒</li>
-     * <li>{@link TimeConstants#MIN }: 分</li>
-     * <li>{@link TimeConstants#HOUR}: 小时</li>
-     * <li>{@link TimeConstants#DAY }: 天</li>
-     * </ul>
+     * @param unit   单位类型
+     *               <ul>
+     *               <li>{@link TimeConstants#MSEC}: 毫秒</li>
+     *               <li>{@link TimeConstants#SEC }: 秒</li>
+     *               <li>{@link TimeConstants#MIN }: 分</li>
+     *               <li>{@link TimeConstants#HOUR}: 小时</li>
+     *               <li>{@link TimeConstants#DAY }: 天</li>
+     *               </ul>
      * @return unit时间戳
      */
     public static long getTimeSpanByNow(long millis, @TimeConstants.Unit int unit) {
@@ -615,16 +618,16 @@ public final class TimeUtils {
      * 获取合适型与当前时间的差
      * <p>time格式为yyyy-MM-dd HH:mm:ss</p>
      *
-     * @param time 时间字符串
+     * @param time      时间字符串
      * @param precision 精度
-     * <ul>
-     * <li>precision = 0，返回null</li>
-     * <li>precision = 1，返回天</li>
-     * <li>precision = 2，返回天和小时</li>
-     * <li>precision = 3，返回天、小时和分钟</li>
-     * <li>precision = 4，返回天、小时、分钟和秒</li>
-     * <li>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</li>
-     * </ul>
+     *                  <ul>
+     *                  <li>precision = 0，返回null</li>
+     *                  <li>precision = 1，返回天</li>
+     *                  <li>precision = 2，返回天和小时</li>
+     *                  <li>precision = 3，返回天、小时和分钟</li>
+     *                  <li>precision = 4，返回天、小时、分钟和秒</li>
+     *                  <li>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</li>
+     *                  </ul>
      * @return 合适型与当前时间的差
      */
     public static String getFitTimeSpanByNow(String time, int precision) {
@@ -636,17 +639,17 @@ public final class TimeUtils {
      * 获取合适型与当前时间的差
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time      时间字符串
      * @param precision 精度
-     * @param pattern 时间格式
-     * <ul>
-     * <li>precision = 0，返回null</li>
-     * <li>precision = 1，返回天</li>
-     * <li>precision = 2，返回天和小时</li>
-     * <li>precision = 3，返回天、小时和分钟</li>
-     * <li>precision = 4，返回天、小时、分钟和秒</li>
-     * <li>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</li>
-     * </ul>
+     * @param pattern   时间格式
+     *                  <ul>
+     *                  <li>precision = 0，返回null</li>
+     *                  <li>precision = 1，返回天</li>
+     *                  <li>precision = 2，返回天和小时</li>
+     *                  <li>precision = 3，返回天、小时和分钟</li>
+     *                  <li>precision = 4，返回天、小时、分钟和秒</li>
+     *                  <li>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</li>
+     *                  </ul>
      * @return 合适型与当前时间的差
      */
     public static String getFitTimeSpanByNow(String time, int precision, String pattern) {
@@ -657,16 +660,16 @@ public final class TimeUtils {
     /**
      * 获取合适型与当前时间的差
      *
-     * @param date Date类型时间
+     * @param date      Date类型时间
      * @param precision 精度
-     * <ul>
-     * <li>precision = 0，返回null</li>
-     * <li>precision = 1，返回天</li>
-     * <li>precision = 2，返回天和小时</li>
-     * <li>precision = 3，返回天、小时和分钟</li>
-     * <li>precision = 4，返回天、小时、分钟和秒</li>
-     * <li>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</li>
-     * </ul>
+     *                  <ul>
+     *                  <li>precision = 0，返回null</li>
+     *                  <li>precision = 1，返回天</li>
+     *                  <li>precision = 2，返回天和小时</li>
+     *                  <li>precision = 3，返回天、小时和分钟</li>
+     *                  <li>precision = 4，返回天、小时、分钟和秒</li>
+     *                  <li>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</li>
+     *                  </ul>
      * @return 合适型与当前时间的差
      */
     public static String getFitTimeSpanByNow(Date date, int precision) {
@@ -677,16 +680,16 @@ public final class TimeUtils {
     /**
      * 获取合适型与当前时间的差
      *
-     * @param millis 毫秒时间戳
+     * @param millis    毫秒时间戳
      * @param precision 精度
-     * <ul>
-     * <li>precision = 0，返回null</li>
-     * <li>precision = 1，返回天</li>
-     * <li>precision = 2，返回天和小时</li>
-     * <li>precision = 3，返回天、小时和分钟</li>
-     * <li>precision = 4，返回天、小时、分钟和秒</li>
-     * <li>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</li>
-     * </ul>
+     *                  <ul>
+     *                  <li>precision = 0，返回null</li>
+     *                  <li>precision = 1，返回天</li>
+     *                  <li>precision = 2，返回天和小时</li>
+     *                  <li>precision = 3，返回天、小时和分钟</li>
+     *                  <li>precision = 4，返回天、小时、分钟和秒</li>
+     *                  <li>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</li>
+     *                  </ul>
      * @return 合适型与当前时间的差
      */
     public static String getFitTimeSpanByNow(long millis, int precision) {
@@ -719,7 +722,7 @@ public final class TimeUtils {
      * 获取友好型与当前时间的差
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return 友好型与当前时间的差
      * <ul>
@@ -816,7 +819,7 @@ public final class TimeUtils {
      * 判断是否同一天
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return {@code true}: 是<br>{@code false}: 否
      */
@@ -865,7 +868,7 @@ public final class TimeUtils {
      * 判断是否闰年
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return {@code true}: 闰年<br>{@code false}: 平年
      */
@@ -926,7 +929,7 @@ public final class TimeUtils {
      * 获取星期
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return 星期
      */
@@ -975,7 +978,7 @@ public final class TimeUtils {
      * <p>注意：周日的Index才是1，周六为7</p>
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return 1...7
      */
@@ -1028,7 +1031,7 @@ public final class TimeUtils {
      * <p>注意：国外周日才是新的一周的开始</p>
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return 1...5
      */
@@ -1081,7 +1084,7 @@ public final class TimeUtils {
      * <p>注意：国外周日才是新的一周的开始</p>
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return 1...54
      */
@@ -1116,8 +1119,8 @@ public final class TimeUtils {
     }
 
 
-    private static final String[] CHINESE_ZODIAC = { "猴", "鸡", "狗", "猪", "鼠",
-            "牛", "虎", "兔", "龙", "蛇", "马", "羊" };
+    private static final String[] CHINESE_ZODIAC = {"猴", "鸡", "狗", "猪", "鼠",
+            "牛", "虎", "兔", "龙", "蛇", "马", "羊"};
 
 
     /**
@@ -1136,7 +1139,7 @@ public final class TimeUtils {
      * 获取生肖
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return 生肖
      */
@@ -1180,10 +1183,10 @@ public final class TimeUtils {
     }
 
 
-    private static final String[] ZODIAC = { "水瓶座", "双鱼座", "白羊座", "金牛座", "双子座",
-            "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座" };
-    private static final int[] ZODIAC_FLAGS = { 20, 19, 21, 21, 21, 22, 23, 23,
-            23, 24, 23, 22 };
+    private static final String[] ZODIAC = {"水瓶座", "双鱼座", "白羊座", "金牛座", "双子座",
+            "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座"};
+    private static final int[] ZODIAC_FLAGS = {20, 19, 21, 21, 21, 22, 23, 23,
+            23, 24, 23, 22};
 
 
     /**
@@ -1202,7 +1205,7 @@ public final class TimeUtils {
      * 获取星座
      * <p>time格式为pattern</p>
      *
-     * @param time 时间字符串
+     * @param time    时间字符串
      * @param pattern 时间格式
      * @return 生肖
      */
@@ -1241,13 +1244,13 @@ public final class TimeUtils {
      * 获取星座
      *
      * @param month 月
-     * @param day 日
+     * @param day   日
      * @return 星座
      */
     public static String getZodiac(int month, int day) {
         return ZODIAC[day >= ZODIAC_FLAGS[month - 1]
-                      ? month - 1
-                      : (month + 10) % 12];
+                ? month - 1
+                : (month + 10) % 12];
     }
 
 
@@ -1312,5 +1315,47 @@ public final class TimeUtils {
             long currentTime = date.getTime(); // date类型转成long类型
             return currentTime;
         }
+    }
+
+    /**
+     * 毫秒转 (时:分:秒)
+     * @param mill 毫秒
+     * @return
+     */
+    public static String mills2Time(long mill) {
+        long second = (mill % (1000 * 60)) / 1000;
+        long minute = (mill % (1000 * 60 * 60)) / (1000 * 60);
+        long hour = mill / (1000 * 60 * 60);
+        String strSecond = second < 10 ? "0" + second : "" + second;
+        String strMinute = minute < 10 ? "0" + minute : "" + minute;
+        String strHour = hour < 10 ? "0" + hour : "" + hour;
+        return strHour + ":" + strMinute + ":" + strSecond;
+    }
+
+    /**
+     * 转换为日期模式,只能小于24小时使用
+     * @param time
+     * @return
+     */
+    public static String time2mills(long time){
+        long ms = 3600000 * 25;
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+        String hms = formatter.format(time);
+        return hms;
+    }
+
+    /**
+     * 格式"01:20:59" 转换为毫秒
+     * @param time
+     * @return
+     */
+    public static Long time2mill(String time){
+        String[] str = time.split(":");
+        int hour = Integer.parseInt(str[0]);
+        int minute = Integer.parseInt(str[1]);
+        int second = Integer.parseInt(str[2]);
+        long result = hour * 3600 + minute * 60 + second;
+        return result * 1000L;
     }
 }

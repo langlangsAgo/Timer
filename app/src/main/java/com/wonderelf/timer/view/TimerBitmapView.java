@@ -60,7 +60,7 @@ public class TimerBitmapView extends View {
         mPaint = new Paint();//Bitmap的画笔
 
         //设置背景
-        mBitmapBackground = BitmapFactory.decodeResource(getResources(), R.drawable.photo_meat_beef);
+        mBitmapBackground = BitmapFactory.decodeResource(getResources(), R.drawable.img_cabbage);
 
         mPaintCover = new Paint();
         mPaintCover.setAntiAlias(true);

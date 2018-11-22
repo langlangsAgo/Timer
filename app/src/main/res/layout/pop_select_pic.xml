@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/pop_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/btn_camera"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_57"
+            android:background="@drawable/select_camera_btn"
+            android:gravity="center"
+            android:text="拍摄"
+            android:textColor="@color/color_404040"
+            android:textSize="@dimen/size_34px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0.1"
+            android:background="@color/color_DDDDDD" />
+
+        <TextView
+            android:id="@+id/btn_pic"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_57"
+            android:background="@drawable/select_pic_btn"
+            android:gravity="center"
+            android:text="相册"
+            android:textColor="@color/color_404040"
+            android:textSize="@dimen/size_34px" />
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_57"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/select_cancel_btn"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/color_404040"
+            android:textSize="@dimen/size_34px" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

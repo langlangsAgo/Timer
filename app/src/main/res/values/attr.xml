@@ -41,7 +41,6 @@
         <attr name="smallColor" format="color"/><!--色带宽度-->
         <!--外圈颜色-->
         <attr name="bigColor" format="color"/>
-
         <!--中间字体颜色-->
         <attr name="centerTextSize" format="dimension"/>
         <!--色带宽度-->
@@ -119,5 +118,16 @@
         <attr name="xf_color" format="color"/>
         <!--擦除画笔宽度属性，其属性值可以是具体的值"10dp",也可以是res中的资源文件-->
         <attr name="xf2_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="TimerView">
+        <!--背景图片属性，其属性值可以是res中的资源文件-->
+        <attr name="siv_color" format="color"/>
+        <attr name="siv_mask_color" format="color"/>
+        <attr name="siv_round_radius" format="dimension"/>
+        <attr name="siv_round_radius_leftTop" format="dimension"/>
+        <attr name="siv_round_radius_leftBottom" format="dimension"/>
+        <attr name="siv_round_radius_rightTop" format="dimension"/>
+        <attr name="siv_round_radius_rightBottom" format="dimension"/>
     </declare-styleable>
 </resources>

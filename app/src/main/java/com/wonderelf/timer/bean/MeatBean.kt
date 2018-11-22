@@ -12,15 +12,18 @@ class MeatBean() : BaseInfo(), Parcelable {
 
     var name = ""
     var img = 0
+    var bg = 0
 
     constructor(parcel: Parcel) : this() {
         name = parcel.readString()
         img = parcel.readInt()
+        bg = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeInt(img)
+        parcel.writeInt(bg)
     }
 
     override fun describeContents(): Int {

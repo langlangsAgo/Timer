@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_pop_clock_big" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_img"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/color_94D1CA"
+            android:textSize="@dimen/size_32px" />
+
+        <TextView
+            android:id="@+id/tv_notify_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:text="计时结束"
+            android:textColor="@color/color_404040"
+            android:textSize="@dimen/size_32px" />
+    </RelativeLayout>
+</RelativeLayout>

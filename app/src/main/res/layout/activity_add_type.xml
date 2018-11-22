@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_all"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_94D1CA"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_24"
+        android:paddingLeft="@dimen/dp_24"
+        android:paddingRight="@dimen/dp_24"
+        android:paddingTop="@dimen/dp_24">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tv_hour"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_28px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tv_minute"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_28px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tv_second"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_28px" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- 占位 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_24"
+        android:background="@color/color_94D1CA" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16">
+
+        <EditText
+            android:id="@+id/ed_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36"
+            android:background="@color/transparent"
+            android:hint="@string/tv_preset"
+            android:textColorHint="@color/color_BDBDBD"
+            android:lines="1"
+            android:maxLength="16"
+            android:textColor="@color/color_404040"
+            android:textSize="@dimen/size_32px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_999999" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="@dimen/dp_104"
+        android:layout_height="@dimen/dp_104"
+        android:layout_marginTop="@dimen/dp_36"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:src="@drawable/icon_camera"/>
+</LinearLayout>

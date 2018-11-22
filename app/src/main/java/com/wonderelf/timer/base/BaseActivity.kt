@@ -9,6 +9,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.remair.util.AppManager
+import com.remair.util.LogUtils
 import com.remair.util.StatusBarUtil
 import com.wonderelf.timer.R
 
@@ -67,6 +68,12 @@ abstract class BaseActivity : AppCompatActivity() {
         }
         return false
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppManager.getAppManager().finishActivity(this)
+    }
+
 }
 
 

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="wrap_content"
+        android:background="@drawable/but_bg_dlaog"
+        android:layout_centerInParent="true"
+        >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="28dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:text="确定删除?"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/size_30px" />
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0.1"
+            android:layout_below="@+id/tv_title"
+            android:background="@color/color_D9D9D9" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_below="@+id/v_line"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btn_no"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/select_btn_bg_left"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/color_4F7DDD"
+                android:textSize="@dimen/size_30px" />
+
+            <View
+                android:id="@+id/v_line2"
+                android:layout_width="@dimen/dp_0.1"
+                android:layout_height="match_parent"
+                android:background="@color/color_D9D9D9" />
+
+            <TextView
+                android:id="@+id/btn_yes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/select_btn_bg_right"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/color_4F7DDD"
+                android:textSize="@dimen/size_30px" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

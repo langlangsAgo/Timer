@@ -1,9 +1,12 @@
 package com.wonderelf.timer.base
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
-import android.content.pm.PackageManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
+import android.support.annotation.RequiresApi
+import com.remair.util.toast.ToastUtils
+import com.wonderelf.timer.util.NotificationUtil
 
 /**
  * Author: cl
@@ -12,31 +15,19 @@ import android.content.pm.PackageManager
  */
 class XApplication : Application() {
 
-    private val TAG = "horse"
-
     companion object {
-        var instace: Application? = null
-        fun instace() = instace!!
+        private var instance: Application? = null
+        fun instance() = instance!!
     }
 
     override fun onCreate() {
         super.onCreate()
-        instace = this
-
-    }
-
-    private fun isPackageInstalled(name: String): Boolean {
-        val pm = packageManager
-        try {
-            pm.getPackageInfo(name, 0)
-            return true
-        } catch (e: PackageManager.NameNotFoundException) {
-            return false
+        instance = this
+        // 8.0注册通知渠道
+        if (Build.VERSION.SDK_INT >= 26) {
+            val channel = NotificationChannel(NotificationUtil.id, NotificationUtil.name, NotificationManager.IMPORTANCE_HIGH)
+            NotificationUtil(instance()).manager.createNotificationChannel(channel)
         }
-
-    }
-
-    fun getPreference(): SharedPreferences {
-        return getSharedPreferences(TAG, Context.MODE_PRIVATE)
+//        ToastUtils.init(this)
     }
 }

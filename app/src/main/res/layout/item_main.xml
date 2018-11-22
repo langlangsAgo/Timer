@@ -4,9 +4,10 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="@dimen/dp_156"
-        android:layout_height="@dimen/dp_156"
-        android:background="@drawable/shape_meat"
+        android:id="@+id/rl_bg"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_300"
+        android:background="@drawable/shape_bg_meat"
         android:gravity="center"
         android:orientation="vertical">
 

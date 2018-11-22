@@ -3,18 +3,14 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <include layout="@layout/title_bar"
-        android:id="@+id/head_title"/>
+    <include
+        android:id="@+id/head_title"
+        layout="@layout/title_bar" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/dp_16"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/dp_16"
-        android:paddingRight="@dimen/dp_16"
-        android:paddingBottom="@dimen/dp_12"
-        android:layout_below="@+id/head_title"
-        />
+        android:layout_below="@+id/head_title" />
 
 </RelativeLayout>
