@@ -55,7 +55,7 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
     private Bitmap mBitmap;
     private Paint mBitmapPaint = new Paint();
     private BitmapShader mBitmapShader;
-    private Path mPath = new Path();
+    private Path mPath = new Path();  // 背景图圆角
     private RectF mViewRect = new RectF(); // imageview的矩形区域
 
 
@@ -65,10 +65,12 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
     private float mRadius; //圆的半径
 
     private Paint bigCirclePaint; //中间大圆
-    private Paint maskPaint; //遮罩层
+    private Paint maskPaint; //矩形
     private Paint paint; // 扇形
+    private Paint mPaint; // 遮罩层
+    private Paint trigonPaint; // 三角形
+    private Path trigonPath; // 三角形
 
-    private Paint mPaint;
     private Canvas canvasMask; //
     private Bitmap bitmap;  //设置一个Bitmap
 
@@ -108,22 +110,32 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
     private void init() {
         //Bitmap的画笔
         mPaint = new Paint();
+//        //清屏
+//        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+//        canvasMask.drawPaint(mPaint);
+//        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
         //绘制大圆
         bigCirclePaint = new Paint();
         bigCirclePaint.setAntiAlias(true);
-        bigCirclePaint.setColor(Color.GREEN);
+        bigCirclePaint.setColor(Color.GREEN); //颜色随机设置
         PorterDuffXfermode mode = new PorterDuffXfermode(PorterDuff.Mode.DST_OUT);
-        bigCirclePaint.setXfermode(mode);
-        // 绘制遮罩层
+        bigCirclePaint.setXfermode(mode); // DST_OUT:矩形遮罩和圆形重叠后取矩形中去掉圆形的部分
+        // 绘制整个矩形遮罩
         maskPaint = new Paint();
         maskPaint.setAntiAlias(true);
         maskPaint.setColor(mMaskColor);
-
-        // 中间扇形
+        // 中间扇形进度
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(mMaskColor);
-
+        // 暂停键
+//        trigonPaint = new Paint();
+//        trigonPaint.setAntiAlias(true);
+//        trigonPaint.setColor(Color.GREEN);
+//        trigonPath.moveTo(x - (mRadius / 2), y - (mRadius / 2)); // 起点
+//        trigonPath.lineTo(mRadius / 2 + x, y);
+//        trigonPath.lineTo(x - (mRadius / 2), y + (mRadius / 2));
+//        trigonPath.close(); // 构成三角形
     }
 
     @Override
@@ -134,9 +146,6 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
         y = mHeight / 2;
         mRadius = mWidth / 3;
         setMeasuredDimension(mWidth, mHeight);//设置宽和高
-        //自己创建一个Bitmap
-        bitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
-        canvasMask = new Canvas(bitmap);//该画布为bitmap的
     }
 
     @Override
@@ -193,20 +202,18 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
         }
 
         if (mIsShowMaskOnClick) {
+            //自己创建一个Bitmap
+            bitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
+            canvasMask = new Canvas(bitmap);//该画布为bitmap的
             //设置该View画布的背景
-//            if (isFirst) {
-//                LogUtils.e("-----------画背景");
-//                isFirst = false;
-//                canvas.drawBitmap(bitmap, 0, 0, mPaint);
-//                //设置该View画布的背景
-//                canvasMask.drawRoundRect(new RectF(0, 0, mWidth, mHeight), 10, 10, maskPaint);
-//                canvasMask.drawCircle(x, y, mRadius, bigCirclePaint);
-//            }
-
-            // 画扇形
+            canvas.drawBitmap(bitmap, 0, 0, mPaint);
+            // 绘制矩形
+            canvasMask.drawRoundRect(new RectF(0, 0, mWidth, mHeight), 10, 10, maskPaint);
+            // 绘制圆形
+            canvasMask.drawCircle(x, y, mRadius, bigCirclePaint);
+            // 绘制扇形
             RectF oval = new RectF(x - mRadius + 10, y - mRadius + 10, x + mRadius - 10, y + mRadius - 10);
             canvas.drawArc(oval, startAngle, sweepAngle, true, paint);
-
         } else {
             setDrawableColorFilter(null);
         }
@@ -260,6 +267,7 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
     }
 
     private ValueAnimator animator;
+
     // 开始动画
     public void startCountDownTime() {
 //        if (animator.isStarted()){
@@ -347,10 +355,10 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
     /**
      * 继续动画
      */
-    public void setAnimatorResume(long duration){
+    public void setAnimatorResume(long duration) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             animator.resume();
-        }else {
+        } else {
             animator = ValueAnimator.ofFloat(currentProgress, 100);
             animator.setDuration(duration);
             animator.setInterpolator(new LinearInterpolator());//匀速
