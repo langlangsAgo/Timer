@@ -1,11 +1,13 @@
 package com.wonderelf.timer.util;
 
 
+import android.app.Activity;
 import android.app.AppOpsManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -16,6 +18,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 import com.remair.util.LogUtils;
 import com.wonderelf.timer.R;
 import com.wonderelf.timer.activity.AllDetailActivity;
+import com.wonderelf.timer.activity.MainActivity;
 import com.wonderelf.timer.base.XApplication;
 
 import java.lang.reflect.Field;
@@ -49,11 +53,13 @@ public class NotificationUtil extends ContextWrapper {
     private static Notification notification;
     private NotificationManager manager;
     private static NotificationCompat.Builder cBuilder;
+    private static Vibrator vib;
 
     public NotificationUtil(Context context) {
         super(context);
         mContext = context;
         cBuilder = new NotificationCompat.Builder(mContext, id);
+        vib = (Vibrator) mContext.getSystemService(Service.VIBRATOR_SERVICE);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -87,7 +93,7 @@ public class NotificationUtil extends ContextWrapper {
 
     private void notifyCustomView(String title, String content, int notification_ID) {
         //设置想要展示的数据内容
-        Intent intent = new Intent(mContext, AllDetailActivity.class);
+        Intent intent = new Intent(mContext, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pIntent = PendingIntent.getActivity(mContext,
                 requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -147,6 +153,7 @@ public class NotificationUtil extends ContextWrapper {
     }
 
     private static Ringtone mRingTone;
+
     /**
      * 播放闹钟铃声
      *
@@ -202,6 +209,27 @@ public class NotificationUtil extends ContextWrapper {
             }
         }
         return isEnabled;
+    }
+
+    //震动milliseconds毫秒
+    public static void vibrate(long milliseconds) {
+        if (vib != null){
+            vib.vibrate(milliseconds);
+        }
+    }
+
+    //以pattern[]方式震动
+    public static void vibrate(long[] pattern, int repeat) {
+        if (vib != null) {
+            vib.vibrate(pattern, repeat);
+        }
+    }
+
+    //取消震动
+    public static void virateCancle() {
+        if (vib != null) {
+            vib.cancel();
+        }
     }
 
 }

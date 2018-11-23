@@ -1333,6 +1333,21 @@ public final class TimeUtils {
     }
 
     /**
+     * 毫秒转 (时:分:秒)
+     * @param mill 毫秒
+     * @return
+     */
+    public static String mills2Time2(long mill) {
+        long second = (mill % (1000 * 60)) / 1000;
+        long minute = (mill % (1000 * 60 * 60)) / (1000 * 60);
+        long hour = mill / (1000 * 60 * 60);
+        String strSecond = second < 10 ? "0" + second : "" + second;
+        String strMinute = minute < 10 ? "0" + minute : "" + minute;
+        String strHour = hour < 10 ? "0" + hour : "" + hour;
+        return strHour + ":" + strMinute + ":" + strSecond;
+    }
+
+    /**
      * 转换为日期模式,只能小于24小时使用
      * @param time
      * @return

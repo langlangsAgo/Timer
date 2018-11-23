@@ -1,7 +1,6 @@
 package com.wonderelf.timer.adapter
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -9,15 +8,16 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.remair.util.LogUtils
 import com.remair.util.ScreenUtils
 import com.remair.util.TimeUtils
 import com.wonderelf.timer.R
 import com.wonderelf.timer.base.XApplication
 import com.wonderelf.timer.bean.TypeDetailBean
 import com.wonderelf.timer.countdowntime.TimerState
-import kotlinx.android.synthetic.main.item_type_detail.view.*
+import kotlinx.android.synthetic.main.item_timer_view.view.*
 
-class DetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>, spanCount: Int, spaceWidth: Int) : RecyclerView.Adapter<DetailAdapter.ViewHolder>(), View.OnClickListener, View.OnLongClickListener {
+class RunningDetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>, spanCount: Int, spaceWidth: Int) : RecyclerView.Adapter<RunningDetailAdapter.ViewHolder>(), View.OnClickListener, View.OnLongClickListener {
 
     private var context = context1
     private var list = list2 //数据源
@@ -56,12 +56,14 @@ class DetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>, spanC
             tv_name.text = list[position].name
             val totalTime = TimeUtils.mills2Time(list[position].totalTime)
             val remainingTime = TimeUtils.mills2Time(list[position].remainingTime)
-            iv_reset.visibility = View.VISIBLE
             when (list[position].state) {
                 TimerState.START -> {
                     tv_time.text = remainingTime
+                    iv_reset.visibility = View.VISIBLE
                     tv_time.setTextColor(Color.parseColor("#404040"))
                     tv_name.setTextColor(Color.parseColor("#404040"))
+                    val progress = ((list[position].totalTime - list[position].remainingTime) / list[position].totalTime.toDouble() * 100).toFloat()
+                    maskImageView.setCountdownTime(list[position].remainingTime, progress, true, position)
                 }
                 TimerState.PAUSE -> {
                     tv_time.text = remainingTime
@@ -86,8 +88,8 @@ class DetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>, spanC
                     click?.onResetClick(position)
                 }
             }
-            holder.itemView.setOnClickListener(this@DetailAdapter)
-            holder.itemView.setOnLongClickListener(this@DetailAdapter)
+            holder.itemView.setOnClickListener(this@RunningDetailAdapter)
+            holder.itemView.setOnLongClickListener(this@RunningDetailAdapter)
             holder.itemView.tag = position
         }
     }

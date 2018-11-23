@@ -1,9 +1,7 @@
 package com.wonderelf.timer.adapter
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -14,15 +12,15 @@ import com.remair.util.LogUtils
 import com.remair.util.ScreenUtils
 import com.remair.util.TimeUtils
 import com.wonderelf.timer.R
-import com.wonderelf.timer.R.id.maskImageView
 import com.wonderelf.timer.base.XApplication
 import com.wonderelf.timer.bean.TypeDetailBean
-import com.wonderelf.timer.countdowntime.PaintState
 import com.wonderelf.timer.countdowntime.TimerState
 import com.wonderelf.timer.view.TimerView
 import kotlinx.android.synthetic.main.item_type_detail.view.*
 
-class TypeDetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>, spanCount: Int, spaceWidth: Int) : RecyclerView.Adapter<TypeDetailAdapter.ViewHolder>(), View.OnClickListener, View.OnLongClickListener {
+class TypeDetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>,
+                        spanCount: Int, spaceWidth: Int) : RecyclerView.Adapter<TypeDetailAdapter.ViewHolder>(),
+        View.OnClickListener, View.OnLongClickListener, TimerView.OnCountdownFinishListener {
 
     private var context = context1
     private var list = list2 //数据源
@@ -48,11 +46,7 @@ class TypeDetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>, s
                 Glide.with(context).load(list[position].img)
                         .apply(RequestOptions().placeholder(R.drawable.img_clock)).into(maskImageView)
             }
-            if (isEdit) {
-                iv_check.visibility = View.VISIBLE
-            } else {
-                iv_check.visibility = View.GONE
-            }
+
             if (list[position].isSelect == 1) {
                 iv_check.setImageResource(R.drawable.icon_checkmark)
             } else {
@@ -61,14 +55,15 @@ class TypeDetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>, s
             tv_name.text = list[position].name
             val totalTime = TimeUtils.mills2Time(list[position].totalTime)
             val remainingTime = TimeUtils.mills2Time(list[position].remainingTime)
-            iv_reset.visibility = View.VISIBLE
             // 倒计时状态
             when (list[position].state) {
                 TimerState.START -> {
+                    iv_reset.visibility = View.VISIBLE
                     tv_time.text = remainingTime
                     tv_time.setTextColor(Color.parseColor("#404040"))
                     tv_name.setTextColor(Color.parseColor("#404040"))
-                    maskImageView.setCountdownTime(list[position].totalTime, true)
+                    val progress = ((list[position].totalTime - list[position].remainingTime) / list[position].totalTime.toDouble() * 100).toFloat()
+                    maskImageView.setCountdownTime(list[position].totalTime, progress, true, position)
                 }
                 TimerState.PAUSE -> {
                     tv_time.text = remainingTime
@@ -93,6 +88,11 @@ class TypeDetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>, s
                     tv_time.setTextColor(Color.parseColor("#404040"))
                     tv_name.setTextColor(Color.parseColor("#404040"))
                 }
+            }
+            if (isEdit) {
+                iv_check.visibility = View.VISIBLE
+            } else {
+                iv_check.visibility = View.GONE
             }
 
             iv_reset.setOnClickListener {
@@ -225,11 +225,38 @@ class TypeDetailAdapter(context1: Context, list2: MutableList<TypeDetailBean>, s
     /**
      * 暂停动画
      */
-    fun setAnimatorState(position: Int, bean: TypeDetailBean){
+    fun setAnimatorState(position: Int, bean: TypeDetailBean) {
         list[position].totalTime = bean.totalTime
         list[position].remainingTime = bean.remainingTime
         list[position].state = bean.state
         notifyItemChanged(position)
     }
 
+    override fun onAnimationStart(position: Int, currentProgress: Float) {
+        LogUtils.e("----------onAnimationStart=$position+process=$currentProgress")
+    }
+
+    override fun onAnimatorPause(position: Int, currentProgress: Float) {
+        LogUtils.e("----------onAnimatorPause=$position+process=$currentProgress")
+    }
+
+    override fun onAnimatorResume(position: Int, currentProgress: Float) {
+        LogUtils.e("----------onAnimatorResume=$position+process=$currentProgress")
+    }
+
+    override fun onAnimatorCancel(position: Int, currentProgress: Float) {
+        LogUtils.e("----------onAnimatorCancel=$position+process=$currentProgress")
+    }
+
+    override fun onAnimatorEnd(position: Int, currentProgress: Float) {
+        LogUtils.e("----------onAnimatorEnd=$position+process=$currentProgress")
+    }
+
+    override fun onAnimatorRunning(position: Int, currentProgress: Float) {
+        val time = ((100 - currentProgress) / 100 * list[position].totalTime).toLong()
+        LogUtils.e("----------还有时间=" + Math.ceil((time / 1000).toDouble()))
+//        LogUtils.e("----------还有时间=" + TimeUtils.mills2Time2((Math.ceil((time / 1000).toDouble()) * 1000).toLong()))
+        list[position].remainingTime = time
+
+    }
 }

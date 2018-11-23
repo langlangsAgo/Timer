@@ -1,7 +1,6 @@
 package com.wonderelf.timer.view;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,13 +14,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.animation.LinearInterpolator;
 
 import com.remair.util.LogUtils;
@@ -34,7 +31,7 @@ import com.wonderelf.timer.util.ImageUtils;
  * Description:一个圆形百分比进度 View
  * 用于展示简易的图标
  */
-public class TimerView extends android.support.v7.widget.AppCompatImageView {
+public class TimerRunningView extends android.support.v7.widget.AppCompatImageView {
 
     private boolean mIsShowMaskOnClick = false; // 点击时是否显示遮罩，默认关闭
     private boolean isFirst = true; // 是否第一次展示
@@ -77,18 +74,18 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
     private float startAngle; // 起始角度
     private float sweepAngle; // 当前的角度
     private float currentProgress; // 当前的进度 0-100
-    private long mCountdownTime; // 时长
+    private long mCountdownTime; // 需要倒计时的时长
     private int position;
 
-    public TimerView(Context context) {
+    public TimerRunningView(Context context) {
         this(context, null);
     }
 
-    public TimerView(Context context, AttributeSet attrs) {
+    public TimerRunningView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TimerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TimerRunningView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.TimerView);
@@ -270,6 +267,7 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
 
     // 开始动画
     public void startCountDownTime(float progress) {
+        LogUtils.e("------progress=" + progress);
         animator = ValueAnimator.ofFloat(progress, 100);
         animator.setDuration(mCountdownTime);
         animator.setInterpolator(new LinearInterpolator());//匀速
@@ -366,7 +364,7 @@ public class TimerView extends android.support.v7.widget.AppCompatImageView {
      *
      * @param mCountdownTime
      */
-    public void setCountdownTime(long mCountdownTime,float progress, boolean isShowMaskOnClick, int p) {
+    public void setCountdownTime(long mCountdownTime, float progress, boolean isShowMaskOnClick, int p) {
         this.mCountdownTime = mCountdownTime;
         this.mIsShowMaskOnClick = isShowMaskOnClick;
         this.position = p;

@@ -2,6 +2,7 @@ package com.wonderelf.timer.bean
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.wonderelf.timer.countdowntime.TimerState
 
 /**
  * Author: cl
@@ -13,6 +14,9 @@ class MeatBean() : BaseInfo(), Parcelable {
     var name = ""
     var img = 0
     var bg = 0
+    var state = TimerState.DEFAULT
+    var totalTime = 0L
+    var remainingTime = 0L
 
     constructor(parcel: Parcel) : this() {
         name = parcel.readString()

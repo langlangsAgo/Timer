@@ -8,7 +8,8 @@ package com.wonderelf.timer.bean
 class SharedKey {
 
     companion object {
-        var isFirstIn : String = "isFirstIn" //第一次进入
-        var tag_list: String = "tag_list" //肉类
+        var isFirstIn : String = "isFirstIn" // 第一次进入
+        var tag_list: String = "tag_list" // 肉类
+        var isQuiet: String = "isQuiet" // 是否静音
     }
 }

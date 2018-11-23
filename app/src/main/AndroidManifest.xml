@@ -9,8 +9,10 @@
     <!--存储权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <!--静音权限-->
+    <!--声音权限-->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <!--震动权限-->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".base.XApplication"

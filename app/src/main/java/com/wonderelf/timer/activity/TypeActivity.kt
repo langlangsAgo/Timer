@@ -18,14 +18,18 @@ import com.wonderelf.timer.countdowntime.CountDownTimerSupport
 import com.wonderelf.timer.countdowntime.OnCountDownTimerListener
 import com.wonderelf.timer.countdowntime.PaintState
 import com.wonderelf.timer.countdowntime.TimerState
+import com.wonderelf.timer.util.CountDownTimeUtils
 import com.wonderelf.timer.util.NotificationUtil
 import com.wonderelf.timer.util.SharedPreferenceUtil
 import com.wonderelf.timer.view.PopupDelType
+import com.wonderelf.timer.view.TimerView
 import kotlinx.android.synthetic.main.activity_type.*
 import kotlinx.android.synthetic.main.item_type_detail.*
 import kotlinx.android.synthetic.main.item_type_detail.view.*
 import kotlinx.android.synthetic.main.title_bar.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.toast
 import java.io.Serializable
 
@@ -44,14 +48,14 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
     private var delList = mutableListOf<TypeDetailBean>() // 将要删除的菜单集合
     private var list = mutableListOf<TypeDetailBean>() //数据源
 
-    private var timerMap = mutableMapOf<Int, CountDownTimerSupport>() //添加所有正在计时的timer
-
     companion object {
+        var timerMap = mutableMapOf<Int, CountDownTimerSupport>() //添加所有正在计时的timer
         const val typeRequest = 1001
     }
 
     override fun initUI() {
         setContentView(R.layout.activity_type)
+//        EventBus.getDefault().register(this)
         iv_back.visibility = View.VISIBLE
         ll_type.visibility = View.VISIBLE
     }
@@ -74,6 +78,12 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
             if (list.isEmpty() && list.size == 0) {
                 toast("请添加数据")
             } else {
+                for (i in list.indices) {
+                    if (list[i].state == TimerState.START) {
+                        toast("正在计时无法编辑")
+                        return@setOnClickListener
+                    }
+                }
                 ll_type.visibility = View.GONE
                 ll_edit.visibility = View.VISIBLE
                 isEdit = true
@@ -196,40 +206,7 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
         recycler_view.addItemDecoration(SpacingItemDecoration(space, space))
         (recycler_view.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false//关闭动画,防止选中时闪烁
         recycler_view.adapter = adapter
-//        recycler_view.addOnItemTouchListener(RecyclerViewClickListener(this, recycler_view,
-//                object : RecyclerViewClickListener.OnItemClickListener {
-//                    override fun onItemClick(view: View?, p: Int) {
-//                        position = p
-//                        if (isEdit) {
-//                            // 编辑状态
-////                            adapter?.selectItem(position, if (list[position].isSelect == 0) 1 else 0)
-//                            if (list[position].isSelect == 0) {
-//                                adapter?.selectItem(position, 1)
-//                                // 添加将要删除的数据集合
-//                                delList.add(list[position])
-//                            } else {
-//                                adapter?.selectItem(position, 0)
-//                                // 勾选成功后再次点击去除勾选框时删除缓存delList中对应的数据
-//                                for (i in delList.indices) {
-//                                    if (delList.contains(list[position])) {
-//                                        delList.remove(list[position])
-//                                    }
-//                                }
-//                            }
-//                        } else {
-//                            // 非编辑状态
-//                            initCountDownTime(position)
-//                        }
-//                    }
-//
-//                    override fun onItemLongClick(view: View?, position: Int) {
-//                        ll_type.visibility = View.GONE
-//                        ll_edit.visibility = View.VISIBLE
-//                        isEdit = true
-//                        adapter?.showChecked(isEdit)
-//
-//                    }
-//                }))
+
         adapter?.setOnItemClick(object : TypeDetailAdapter.OnItemClickListener {
             // 点击重置按钮
             override fun onResetClick(position: Int) {
@@ -249,7 +226,6 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
                 position = p
                 if (isEdit) {
                     // 编辑状态
-//                            adapter?.selectItem(position, if (list[position].isSelect == 0) 1 else 0)
                     if (list[position].isSelect == 0) {
                         adapter?.selectItem(position, 1)
                         // 添加将要删除的数据集合
@@ -279,6 +255,14 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
                 adapter?.showChecked(isEdit)
             }
         })
+        countieState()
+    }
+
+    fun countieState() {
+//        for (i in list.indices){
+//            if (list[i].state == TimerState.START){
+//            }
+//        }
     }
 
     /**
@@ -374,7 +358,7 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
                 adapter?.setAnimatorState(position, list[position])
                 toast("继续第" + position + "个")
             }
-            TimerState.RESUME ->{
+            TimerState.RESUME -> {
                 // 暂停倒计时
                 if (timerMap[position] != null) {
                     timerMap[position]?.pause()
@@ -391,7 +375,7 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
                 }
                 list[position].state = TimerState.START // 重新开始后设置为START状态
                 list[position].remainingTime = list[position].totalTime // 重新设置倒计时时间
-                AllDetailActivity.allList.add(list[position]) // 添加到正在展示详情页
+                AllDetailActivity.allList.add(0, list[position]) // 添加到正在展示详情页
                 toast("重新开始第" + position + "个")
             }
             TimerState.DEFAULT -> {
@@ -407,7 +391,8 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
                                 var newTime = millisUntilFinished
                                 list[position].remainingTime = Math.max(0, newTime)
                                 // 列表开始倒计时
-                                adapter?.startTime(position, list[position])
+//                                adapter?.startTime(position, list[position])
+                                // 发送数据,在正在计时页面实时更新倒计时信息
                                 EventBus.getDefault().post(list[position])
                             }
                         }
@@ -434,6 +419,7 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
                     mTimer.start()
                     // 添加到正在展示详情页
                     AllDetailActivity.allList.add(0, list[position])
+
                     //添加timer到map集合,用于判断单个item计时状态
                     timerMap.put(position, mTimer)
                 }
@@ -444,9 +430,7 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        for (i in 0 until timerMap.size) {
-            timerMap[i]?.stop()
-        }
+//        EventBus.getDefault().unregister(this)
     }
 
     /**
@@ -464,9 +448,9 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
         for (i in delList.indices) {
             adapter?.removeList(delList[i])
             // 删除后,详情页中的数据也删除
-            if (AllDetailActivity.allList.contains(delList[i])) {
-                AllDetailActivity.Companion.removeListFromEdit(delList[i])
-            }
+//            if (AllDetailActivity.allList.contains(delList[i])) {
+//                AllDetailActivity.Companion.removeListFromEdit(delList[i])
+//            }
         }
         // 删除后清空缓存list
         delList.clear()
@@ -474,15 +458,16 @@ class TypeActivity : BaseActivity(), PopupDelType.onItemOnClickListener {
         saveData()
     }
 
-    override fun onResume() {
-        super.onResume()
-//        if (AllDetailActivity.Companion.allList.isNotEmpty()){
-//            for (i in AllDetailActivity.Companion.allList.indices){
-//                if (list.contains(AllDetailActivity.Companion.allList[i])){
-//                    var position = list.indexOf(AllDetailActivity.Companion.allList[i])
-//                    adapter?.startTime(position, AllDetailActivity.Companion.allList[i])
-//                }
-//            }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun updateCountDownTime(bean: TypeDetailBean) {
+//        if (AllDetailActivity.allList.isNotEmpty() && list.contains(bean)) {
+////            for (i in AllDetailActivity.allList.indices){
+////
+////            }
+//            val position = list.indexOf(bean)
+//            LogUtils.e("---------indexOf=" + position)
+//            LogUtils.e("---------bean=" + bean.toString())
+//            adapter?.startTime(position, bean)
 //        }
-    }
+//    }
 }

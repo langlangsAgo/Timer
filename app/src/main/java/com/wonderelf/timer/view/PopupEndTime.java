@@ -12,7 +12,9 @@ import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.wonderelf.timer.R;
+import com.wonderelf.timer.bean.SharedKey;
 import com.wonderelf.timer.util.NotificationUtil;
+import com.wonderelf.timer.util.SharedPreferenceUtil;
 
 import razerdp.basepopup.BasePopupWindow;
 
@@ -26,12 +28,14 @@ public class PopupEndTime extends BasePopupWindow implements View.OnClickListene
     private TextView tv_notify_name;
     private TextView btn_yes;
     private Context mContext;
+    private boolean isQuiet;
 
     public PopupEndTime(Context context, String content) {
         super(context);
         mContext = context;
         tv_notify_name = (TextView) findViewById(R.id.tv_notify_name);
         btn_yes = (TextView) findViewById(R.id.btn_yes);
+        isQuiet = SharedPreferenceUtil.getBoolean(SharedKey.Companion.isQuiet(), false);
 
         tv_notify_name.setText(content + context.getResources().getText(R.string.end_time_tip));
         setViewClickListener(this, btn_yes);
@@ -93,12 +97,21 @@ public class PopupEndTime extends BasePopupWindow implements View.OnClickListene
 //        } else {
 //            NotificationUtil.playRingtone(mContext);
 //        }
-        NotificationUtil.playRingtone(mContext);
+        if (!isQuiet) {
+            NotificationUtil.playRingtone(mContext);
+        } else {
+            //停止1秒，开启震动1秒，然后又停止1秒，又开启震动1秒，重复下去.
+            NotificationUtil.vibrate(new long[]{1000, 1000, 1000, 1000}, 0);
+        }
     }
 
     @Override
     public void onDismiss() {
         super.onDismiss();
-        NotificationUtil.stopRingtone();
+        if (!isQuiet) {
+            NotificationUtil.stopRingtone();
+        } else {
+            NotificationUtil.virateCancle();
+        }
     }
 }

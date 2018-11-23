@@ -5,10 +5,9 @@ import android.util.Log
 import android.view.View
 import com.remair.util.LogUtils
 import com.wonderelf.timer.R
-import com.wonderelf.timer.adapter.DetailAdapter
+import com.wonderelf.timer.adapter.RunningDetailAdapter
 import com.wonderelf.timer.adapter.GridLayoutManagerNoBug
 import com.wonderelf.timer.adapter.SpacingItemDecoration
-import com.wonderelf.timer.adapter.TypeDetailAdapter
 import com.wonderelf.timer.base.BaseActivity
 import com.wonderelf.timer.bean.TypeDetailBean
 import com.wonderelf.timer.countdowntime.CountDownTimerSupport
@@ -28,23 +27,13 @@ import org.jetbrains.anko.toast
  */
 class AllDetailActivity : BaseActivity() {
 
-    private var adapter: DetailAdapter? = null
+    private var adapterRunning: RunningDetailAdapter? = null
     private var position = 0 // 选中的position
     private var timerMap = mutableMapOf<Int, CountDownTimerSupport>()
+    private var delList = mutableListOf<TypeDetailBean>() //缓存将要删除的数据
 
     companion object {
         var allList = mutableListOf<TypeDetailBean>() //数据源
-        // 同步删除当前页数据
-        fun removeListFromEdit(bean: TypeDetailBean) {
-            if (allList.isNotEmpty()) {
-                for (i in allList.indices) {
-                    if (allList.contains(bean)) {
-                        allList.remove(bean)
-                        LogUtils.e("----删除数据$i")
-                    }
-                }
-            }
-        }
     }
 
     override fun initUI() {
@@ -59,13 +48,20 @@ class AllDetailActivity : BaseActivity() {
 
     override fun initData() {
         if (allList.isNotEmpty()) {
-            LogUtils.e("----allList大小=" + allList.size)
             for (i in allList.indices) {
-                LogUtils.e("----allList" + allList[i].toString())
-//                if (allList[i].state == TimerState.FINISH) {
-//                    allList.remove(allList[i])
-//                }
+                if (allList[i].state == TimerState.FINISH) {
+                    delList.add(allList[i]) //将要删除的数据添加进缓存
+                }
             }
+            // 删除已结束的倒计时
+            if (delList.isNotEmpty()){
+                for (i in delList.indices){
+                    if (allList.contains(delList[i])){
+                        allList.remove(delList[i])
+                    }
+                }
+            }
+            delList.clear() // 清空缓存
             initAdapter()
         }
     }
@@ -73,12 +69,13 @@ class AllDetailActivity : BaseActivity() {
     private fun initAdapter() {
         val spanCount = 2  //列数
         val space = 32 // item间距
-        adapter = DetailAdapter(this@AllDetailActivity, allList, spanCount, space)
+        adapterRunning = RunningDetailAdapter(this@AllDetailActivity, allList, spanCount, space)
         recycler_view.layoutManager = GridLayoutManagerNoBug(this@AllDetailActivity, spanCount)
         recycler_view.addItemDecoration(SpacingItemDecoration(space, space))
         (recycler_view.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false//关闭动画,防止选中时闪烁
-        recycler_view.adapter = adapter
-        adapter?.setOnItemClick(object : DetailAdapter.OnItemClickListener {
+        recycler_view.adapter = adapterRunning
+
+        adapterRunning?.setOnItemClick(object : RunningDetailAdapter.OnItemClickListener {
             // 点击重置按钮
             override fun onResetClick(position: Int) {
                 if (timerMap[position] != null) {
@@ -141,11 +138,7 @@ class AllDetailActivity : BaseActivity() {
                             if (allList[position].state == TimerState.START) {
                                 var newTime = millisUntilFinished
                                 allList[position].remainingTime = Math.max(0, newTime)
-//                                if (newTime <= 0){
-//                                    list[position].state = TimerState.FINISH
-//                                    toast("第" + position + "个倒计时结束")
-//                                }
-                                adapter?.startTime(position, allList[position])
+                                adapterRunning?.startTime(position, allList[position])
                             }
                         }
 
@@ -173,7 +166,8 @@ class AllDetailActivity : BaseActivity() {
     }
 
     /**
-     * 实时更新倒计时
+     * 1.实时更新倒计时
+     * 2.倒计时结束自动删除
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updateCountDownTime(bean: TypeDetailBean) {
@@ -182,16 +176,14 @@ class AllDetailActivity : BaseActivity() {
                 for (i in allList.indices) {
                     when (bean.state) {
                         TimerState.START -> {
-                            adapter?.startTime(i, allList[i])
+                            adapterRunning?.startTime(i, allList[i])
                         }
                         TimerState.FINISH -> {
-                            allList.remove(bean)
-//                            adapter?.removeList(bean)
+                            adapterRunning?.removeList(bean)
                         }
                     }
                 }
             }
         }
     }
-
 }

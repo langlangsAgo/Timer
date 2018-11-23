@@ -5,10 +5,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import com.remair.util.LogUtils
 import com.remair.util.ScreenUtils
 import com.wonderelf.timer.R
 import com.wonderelf.timer.base.XApplication
 import com.wonderelf.timer.bean.MeatBean
+import com.wonderelf.timer.bean.TypeDetailBean
+import com.wonderelf.timer.countdowntime.TimerState
 import kotlinx.android.synthetic.main.item_main.view.*
 
 class MainAdapter(context1: Context, list2: ArrayList<MeatBean>, spanCount: Int, spaceWidth: Int) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
@@ -31,6 +34,25 @@ class MainAdapter(context1: Context, list2: ArrayList<MeatBean>, spanCount: Int,
             holder.itemView.setOnClickListener {
                 click?.getData(list[position], position)
             }
+            when(list[position].state){
+                TimerState.START ->{
+                    val progress = ((list[position].totalTime - list[position].remainingTime) / list[position].totalTime.toDouble() * 100).toFloat()
+                    maskImageView.setCountdownTime(list[position].remainingTime, progress, true, position)
+                }
+                TimerState.PAUSE ->{
+
+                }
+                TimerState.RESUME ->{
+
+                }
+                TimerState.FINISH ->{
+
+                }
+                TimerState.DEFAULT ->{
+
+                }
+            }
+
         }
     }
 
@@ -54,5 +76,12 @@ class MainAdapter(context1: Context, list2: ArrayList<MeatBean>, spanCount: Int,
 
     fun setOnItemClick(click: ItemClicker) {
         this.click = click
+    }
+
+    fun startTime(position: Int, bean: TypeDetailBean){
+        list[position].totalTime = bean.totalTime
+        list[position].remainingTime = bean.remainingTime
+        list[position].state = bean.state
+        notifyItemChanged(position)
     }
 }
